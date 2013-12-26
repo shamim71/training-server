@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="
+				http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+                http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+                http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+
+	<bean id="springSecurityFilterChain" class="org.springframework.security.web.FilterChainProxy">
+		<security:filter-chain-map request-matcher="regex">
+			<!-- Registration URL is available for unauthenticated users -->
+			<security:filter-chain pattern="/customer/?"
+				filters="none" />
+			<!-- For all other URLs, users must be authenticated -->
+<!-- 			<security:filter-chain pattern="/**"
+				filters="digestAuthenticationFilter" /> -->
+		</security:filter-chain-map>
+	</bean>
+
+<!-- 	<bean id="digestAuthenticationFilter"
+		class="com.versacomllc.training.security.MobiLabDigestAuthenticationFilter">
+		<property name="userDetailsService" ref="userDetailsServiceImpl" />
+		<property name="authenticationEntryPoint" ref="digestEntryPoint" />
+		<property name="passwordAlreadyEncoded" value="true" />
+
+		Completely disable this filter.
+		<property name="active" value="false" />
+		Enable strict header validation (should be true for production).
+		<property name="checkAuthenticationHeader" value="true" />
+
+		These are mainly for legacy support, in future versions, the only 
+			excluded URL will be the /customer registration URL
+		<property name="excludedPatterns">
+			<list>
+				<value>/training-server/blabla/blabla/?</value>
+				<value>/training-server/blabla/[^/]*/?</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="applicationThrottlingFilter"
+		class="com.mobilabsolutions.server.commons.filter.ApplicationThrottlingFilter">
+		This filter will be active or not
+		<property name="active" value="true" />
+		No of request with the time limit
+		<property name="maxRequestLimit" value="5" />
+		Total no of request will be counted within the time range. The value 
+			should be provided in seconds
+		<property name="timeRange" value="5" />
+
+	</bean>
+	Entry point for digest
+	<bean id="digestEntryPoint"
+		class="org.springframework.security.web.authentication.www.DigestAuthenticationEntryPoint">
+		Realm name may be different, change also in (Payment)CommonConstants
+		<property name="realmName" value="training-server" />
+
+		Random Key used to generate nonces
+		<property name="key" value="OpRBC1BKWHwwsqAL1j5T" />
+
+		Validity of the nonce, defaults to 5 minutes
+		<property name="nonceValiditySeconds" value="300" />
+	</bean>
+
+	Used by the DigestAuthenticationFilter to validate the user's identity
+	<bean id="userDetailsServiceImpl"
+		class="com.versacomllc.training.security.UserDetailsServiceImpl">
+	</bean> -->
+
+</beans>
